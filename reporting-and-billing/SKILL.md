@@ -1,5 +1,5 @@
 ---
-name: Reporting and Billing
+name: Billing
 description: A set of skills to handle billing the patients, government or health insurance. 
 ---
 
