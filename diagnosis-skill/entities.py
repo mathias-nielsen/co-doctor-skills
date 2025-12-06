@@ -10,6 +10,7 @@ class Category(Enum):
     test_treatment_procedure: "TEST_TREATMENT_PROCEDURE"
     time_expression: "TIME_EXPRESSION"
 
+
 class AttributeType(Enum):
     dosage: "DOSAGE"
     duration: "DURATION"
@@ -18,6 +19,7 @@ class AttributeType(Enum):
     rate: "RATE"
     route_or_mode: "ROUTE_OR_MODE"
     strenght: "STRENGTH"
+
 
 class Attribute(TypedDict):
     begin_offset: int 
@@ -29,6 +31,7 @@ class Attribute(TypedDict):
     id: int
     relationship_score: float
 
+
 class DetectionEntity(TypedDict):
     category: Category
     begin_offset: int
@@ -38,6 +41,46 @@ class DetectionEntity(TypedDict):
     score: float
     attributes
 
+
 class SymptomsOutputState(TypedDict):
     high_confidence: List[DetectionEntity]
     confidence_below_treshold: List[DetectionEntity]
+
+
+class PatientBrief(TypedDict):
+    patient_id: str
+    timestamp: datetime
+
+    conversation: List[Message]
+    detections: List[DetectionEntity]
+
+    medication: List[Medication]
+    medical_record: MedicalRecord
+    substance_use: SubstanceUse
+
+
+class Message(TypedDict):
+    timestamp: datetime
+    actor: 'PATIENT' | 'SYSTEM'
+    message: str
+
+
+class SubstanceUse(TypedDict, total=False):
+    tobacco: str
+    alcohol: str
+    other: str
+
+
+class Medication(TypedDict, total=False):
+    name: str
+    dosage: str
+    frequency: str
+    prescribedBy: str
+    startDate: date
+    recentChanges: List[MedicationChange]
+
+
+class MedicationChange(TypedDict):
+    date: date
+    change: str
+    reason: str
